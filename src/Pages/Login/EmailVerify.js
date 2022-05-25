@@ -17,7 +17,7 @@ const EmailVerify = () => {
                 <div className="card-body">
                     <h2 className="text-center text-2xl font-bold">Email Verification</h2>
 
-                    <button class="btn my-12" onClick={emailverify}>Send Verification Email</button>
+                    <button className="btn my-12" onClick={emailverify}>Send Verification Email</button>
                 </div>
             </div>
         </div>

@@ -22,12 +22,12 @@ const ResetEmail = () => {
                 <div className="card w-96 bg-base-100 shadow-xl">
                     <div className="card-body">
                         <h2 className="text-center text-2xl font-bold">Reset Password</h2>
-                        <div class="form-control my-12">
-                            <label class="label">
-                                <span class="label-text">Your Email</span>
+                        <div className="form-control my-12">
+                            <label className="label">
+                                <span className="label-text">Your Email</span>
                             </label>
-                            <label class="input-group">
-                                <input type="email" placeholder="your email" value={user?.email} onChange={(e) => setEmail(e.target.value)} class="input input-bordered w-full max-w-xs" />
+                            <label className="input-group">
+                                <input type="email" placeholder="your email" value={user?.email} onChange={(e) => setEmail(e.target.value)} className="input input-bordered w-full max-w-xs" />
                                 <button className='btn' onClick={resetpassword}>SEND</button>
 
                             </label>

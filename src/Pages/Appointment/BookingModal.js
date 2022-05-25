@@ -2,11 +2,13 @@ import { format } from 'date-fns';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 
-const BookingModal = ({ treatment, date, setTreatment }) => {
+const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
     const navigate = useNavigate();
     const { _id, name, slots } = treatment;
+    const formattedDate = format(date, 'PP');
     const [user, loading, error] = useAuthState(auth);
     const verify = () => {
         if (user.emailVerified === false) {
@@ -18,10 +20,36 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
     const handleBooking = event => {
         event.preventDefault();
         const slot = event.target.slot.value;
-        console.log(_id, name, slot)
+        const booking = {
+            treatmentId: _id,
+            treatment: name,
+            date: formattedDate,
+            slot,
+            patient: user.email,
+            patientName: user.displayName,
+            phone: event.target.phone.value
+        }
+        fetch('http://localhost:5000/booking', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(booking)
+        })
+            .then(res => res.json())
+            .then(data => {
+                // to close the modal
+                if (data.success) {
+                    toast(`Appointment is set, ${formattedDate} at ${slot} treatment ${data.booking?.treatment}`)
+                }
+                else {
+                    toast.error(`Already have and appointment on, ${data.booking?.date} at ${data.booking?.slot} treatment ${data.booking?.treatment}`)
+                }
+                refetch();
+                setTreatment(null);
 
-        // to close the modal
-        setTreatment(null);
+            })
+
     }
     return (
         <div>
