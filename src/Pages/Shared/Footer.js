@@ -34,7 +34,7 @@ const Footer = () => {
             </div >
 
             <div className='text-center mt-10'>
-                <p className='py-6 text-2xl'>Copyright &copy; {year} - All right reserved by ACME Industries Ltd</p>
+                <p className='py-6 text-2xl'>Copyright &copy; {year} - All right reserved by MD NAZMUL ISLAM</p>
             </div>
         </footer >
     );

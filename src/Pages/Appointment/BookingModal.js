@@ -1,8 +1,20 @@
 import { format } from 'date-fns';
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useNavigate } from 'react-router-dom';
+import auth from '../../firebase.init';
 
 const BookingModal = ({ treatment, date, setTreatment }) => {
+    const navigate = useNavigate();
     const { _id, name, slots } = treatment;
+    const [user, loading, error] = useAuthState(auth);
+    const verify = () => {
+        if (user.emailVerified === false) {
+            return navigate('/verify')
+        }
+        return;
+    }
+    verify()
     const handleBooking = event => {
         event.preventDefault();
         const slot = event.target.slot.value;
@@ -24,11 +36,11 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
                         <select name="slot" className="select select-bordered w-full max-w-xs">
 
                             {
-                                slots.map(slot => <option value={slot}>{slot}</option>)
+                                slots.map((slot, index) => <option key={index} value={slot}>{slot}</option>)
                             }
                         </select>
-                        <input type="text" required name='name' placeholder="Your Name" className="input input-bordered w-full max-w-xs" />
-                        <input type="text" required name='email' placeholder="Email Address" className="input input-bordered w-full max-w-xs" />
+                        <input type="text" required name='name' disabled value={user?.displayName} className="input input-bordered w-full max-w-xs" />
+                        <input type="text" disabled required name='email' placeholder="Email Address" value={user.email} className="input input-bordered w-full max-w-xs" />
                         <input type="text" required name='phone' placeholder="Phone" className="input input-bordered w-full max-w-xs" />
                         <input type="submit" value="Submit" placeholder="Date" className="btn btn-secondary bg-gradient-to-r from-secondary to-primary text-white w-full max-w-xs" />
                     </form>
