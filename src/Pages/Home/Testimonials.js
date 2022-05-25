@@ -9,19 +9,19 @@ const Testimonials = () => {
     const reviews = [
         {
             _id: 1,
-            name: 'winson Herry',
+            name: 'Ahmed ReFat',
             review: '',
             img: people1
         },
         {
             _id: 2,
-            name: 'winson Herry',
+            name: 'Emu',
             review: '',
             img: people2
         },
         {
             _id: 3,
-            name: 'winson Herry',
+            name: 'Tamanna',
             review: '',
             img: people3
         },
