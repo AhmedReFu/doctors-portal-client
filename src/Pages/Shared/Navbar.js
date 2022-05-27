@@ -8,6 +8,7 @@ const Navbar = () => {
     const [user] = useAuthState(auth);
     const logout = () => {
         signOut(auth)
+        localStorage.removeItem('accessToken');
     }
     const menuItems = <>
         <li><Link to="/">Home</Link></li>
@@ -18,7 +19,9 @@ const Navbar = () => {
         {
             user && <li><Link to="/dashboard">Dashboard</Link></li>
 
+
         }
+        <li><Link to=''>{user?.displayName}</Link></li>
         <li>{user ? <button onClick={logout} className='btn btn-ghost'>Sign Out</button> : <Link to="/login">Login</Link>}</li>
     </>
     return (

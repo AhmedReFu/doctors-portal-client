@@ -6,10 +6,13 @@ import About from './Pages/About/About';
 import Appoinment from './Pages/Appointment/Appoinment';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import MyAppointemnt from './Pages/Dashboard/MyAppointemnt';
+import MyHistory from './Pages/Dashboard/MyHistory';
 import MyReview from './Pages/Dashboard/MyReview';
+import Users from './Pages/Dashboard/Users';
 import Home from './Pages/Home/Home';
 import EmailVerify from './Pages/Login/EmailVerify';
 import Login from './Pages/Login/Login';
+import RequireAdmin from './Pages/Login/RequireAdmin';
 import RequireAuth from './Pages/Login/RequireAuth';
 import ResetEmail from './Pages/Login/ResetEmail';
 import SignUp from './Pages/Login/SignUp';
@@ -30,6 +33,8 @@ function App() {
         }>
           <Route index element={<MyAppointemnt></MyAppointemnt>}></Route>
           <Route path='review' element={<MyReview></MyReview>}></Route>
+          <Route path='history' element={<MyHistory></MyHistory>}></Route>
+          <Route path='users' element={<RequireAdmin><Users></Users></RequireAdmin>}></Route>
 
         </Route>
 

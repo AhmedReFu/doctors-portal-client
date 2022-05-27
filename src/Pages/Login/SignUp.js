@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useCreateUserWithEmailAndPassword, useSendEmailVerification, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
+import useToken from '../../hooks/useToken';
 import Footer from '../Shared/Footer';
 import Loading from '../Shared/Loading';
 
@@ -10,9 +11,12 @@ const SignUp = () => {
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
     const navigate = useNavigate();
     const googleSign = async () => {
-        signInWithGoogle();
+        await signInWithGoogle();
         await sendEmailVerification();
     }
+
+
+
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [
         createUserWithEmailAndPassword,
@@ -23,13 +27,15 @@ const SignUp = () => {
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
     const [sendEmailVerification, sending] = useSendEmailVerification(auth);
 
+    const [token] = useToken(user || gUser);
+
     let errorMessage;
 
     if (loading || gLoading) {
         return <Loading></Loading>
     }
-    if (user || gUser) {
-        console.log(user, gUser);
+    if (token) {
+        navigate('/appointment')
     }
     if (error || gError || updateError) {
         errorMessage = <p className='text-red-500'>{error?.message || gUser?.message || updateError?.message}</p>
@@ -38,11 +44,11 @@ const SignUp = () => {
         await createUserWithEmailAndPassword(data.email, data.password);
         await updateProfile({ displayName: data.name });
         await sendEmailVerification();
-        navigate('/login')
+
     };
     return (
         <>
-            <div className='flex h-screen justify-center items-center'>
+            <div className='flex h-screen justify-center items-center my-20'>
                 <div className="card w-96 bg-base-100 shadow-xl">
                     <div className="card-body">
                         <h2 className="text-center text-2xl font-bold">Sign Up</h2>
