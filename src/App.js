@@ -1,13 +1,16 @@
 import { Route, Routes } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import About from './Pages/About/About';
 import Appoinment from './Pages/Appointment/Appoinment';
+import AddDoctor from './Pages/Dashboard/AddDoctor';
 import Dashboard from './Pages/Dashboard/Dashboard';
+import ManageDoctors from './Pages/Dashboard/ManageDoctors';
 import MyAppointemnt from './Pages/Dashboard/MyAppointemnt';
 import MyHistory from './Pages/Dashboard/MyHistory';
 import MyReview from './Pages/Dashboard/MyReview';
+import Payment from './Pages/Dashboard/Payment';
 import Users from './Pages/Dashboard/Users';
 import Home from './Pages/Home/Home';
 import EmailVerify from './Pages/Login/EmailVerify';
@@ -35,6 +38,9 @@ function App() {
           <Route path='review' element={<MyReview></MyReview>}></Route>
           <Route path='history' element={<MyHistory></MyHistory>}></Route>
           <Route path='users' element={<RequireAdmin><Users></Users></RequireAdmin>}></Route>
+          <Route path='addDoctor' element={<RequireAdmin><AddDoctor></AddDoctor></RequireAdmin>}></Route>
+          <Route path='manageDoctor' element={<RequireAdmin><ManageDoctors></ManageDoctors></RequireAdmin>}></Route>
+          <Route path='payment/:id' element={<RequireAdmin><Payment></Payment></RequireAdmin>}></Route>
 
         </Route>
 

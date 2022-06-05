@@ -1,7 +1,7 @@
 import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 
 const MyAppointemnt = () => {
@@ -10,7 +10,7 @@ const MyAppointemnt = () => {
     const [appointments, setAppointments] = useState([]);
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/booking?patient=${user.email}`, {
+            fetch(`http://localhost:5001/booking?patient=${user.email}`, {
                 method: 'GET',
                 headers: {
                     'authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -39,11 +39,13 @@ const MyAppointemnt = () => {
 
                     <thead>
                         <tr>
-                            <th></th>
+                            <th>#</th>
                             <th>Name</th>
                             <th>Date</th>
                             <th>Time</th>
                             <th>Treatment</th>
+                            <th>Price</th>
+                            <th>Pay</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,6 +56,16 @@ const MyAppointemnt = () => {
                                 <td>{a.date}</td>
                                 <td>{a.slot}</td>
                                 <td>{a.treatment}</td>
+                                <td>{a.price}</td>
+                                <td>
+                                    {(a.price && !a.paid) && <Link to={`/dashboard/payment/${a._id}`}>
+                                        <button className='btn btn-xs btn-success'>Pay</button>
+                                    </Link>}
+                                    {(a.price && a.paid) &&
+                                        <label className='text-success'>Pay</label>
+                                    }
+
+                                </td>
                             </tr>)
                         }
 

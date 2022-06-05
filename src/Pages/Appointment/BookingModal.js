@@ -7,16 +7,16 @@ import auth from '../../firebase.init';
 
 const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
     const navigate = useNavigate();
-    const { _id, name, slots } = treatment;
+    const { _id, name, slots, price } = treatment;
     const formattedDate = format(date, 'PP');
     const [user, loading, error] = useAuthState(auth);
-    const verify = () => {
-        if (user.emailVerified === false) {
-            return navigate('/verify')
+    /*     const verify = () => {
+            if (user.emailVerified === false) {
+                return navigate('/verify')
+            }
+            return;
         }
-        return;
-    }
-    verify()
+        verify() */
     const handleBooking = event => {
         event.preventDefault();
         const slot = event.target.slot.value;
@@ -25,11 +25,12 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
             treatment: name,
             date: formattedDate,
             slot,
+            price,
             patient: user.email,
             patientName: user.displayName,
             phone: event.target.phone.value
         }
-        fetch('http://localhost:5000/booking', {
+        fetch('http://localhost:5001/booking', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -40,10 +41,10 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
             .then(data => {
                 // to close the modal
                 if (data.success) {
-                    toast(`Appointment is set, ${formattedDate} at ${slot} treatment ${data.booking?.treatment}`)
+                    toast(`Appointment is set, ${formattedDate} at ${slot} treatment ${name}`)
                 }
                 else {
-                    toast.error(`Already have and appointment on, ${data.booking?.date} at ${data.booking?.slot} treatment ${data.booking?.treatment}`)
+                    toast.error(`Already have and appointment on, ${data.booking?.date} at ${data.booking?.slot} treatment ${name}`)
                 }
                 refetch();
                 setTreatment(null);
@@ -70,6 +71,7 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
                         <input type="text" required name='name' disabled value={user?.displayName} className="input input-bordered w-full max-w-xs" />
                         <input type="text" disabled required name='email' placeholder="Email Address" value={user.email} className="input input-bordered w-full max-w-xs" />
                         <input type="text" required name='phone' placeholder="Phone" className="input input-bordered w-full max-w-xs" />
+                        <input type="text" required name='price' readOnly placeholder="Phone" disabled className="input input-bordered w-full max-w-xs" value={`Price: ${price}`} />
                         <input type="submit" value="Submit" placeholder="Date" className="btn btn-secondary bg-gradient-to-r from-secondary to-primary text-white w-full max-w-xs" />
                     </form>
                 </div>
