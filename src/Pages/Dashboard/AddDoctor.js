@@ -6,7 +6,7 @@ import Loading from '../Shared/Loading';
 
 const AddDoctor = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
-    const { data: services, isLoading } = useQuery('services', () => fetch('http://localhost:5001/service').then(res => res.json()))
+    const { data: services, isLoading } = useQuery('services', () => fetch('https://doctors-protal-server-delta.vercel.app/service').then(res => res.json()))
 
     const imageStorageKey = 'e79bc88f0fbee5b937e1bc01f73b85b4'
     /**
