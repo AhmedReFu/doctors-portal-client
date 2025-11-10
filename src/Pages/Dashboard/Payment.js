@@ -12,7 +12,7 @@ const stripePromise = loadStripe('pk_test_jhTfVrriBRKx16SmyjfzOzj900HoOLgNer');
 
 const Payment = () => {
     const { id } = useParams()
-    const url = `http://localhost:5001/booking/${id}`
+    const url = `https://doctors-protal-server-delta.vercel.app/booking/${id}`
     const { data: appointment, isLoading } = useQuery(['booking', id], () => fetch(url, {
         method: 'GET',
         headers: {
