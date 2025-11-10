@@ -9,7 +9,7 @@ const CheckoutForm = ({ appointment }) => {
     const [success, setSuccess] = useState('');
     const { price, patient, patientName } = appointment;
     useEffect(() => {
-        fetch(`http://localhost:5001/create-payment-intent`, {
+        fetch(`https://doctors-protal-server-delta.vercel.app/create-payment-intent`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
