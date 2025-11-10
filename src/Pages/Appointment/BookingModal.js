@@ -30,7 +30,7 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
             patientName: user.displayName,
             phone: event.target.phone.value
         }
-        fetch('http://localhost:5001/booking', {
+        fetch('https://doctors-protal-server-delta.vercel.app/booking', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
