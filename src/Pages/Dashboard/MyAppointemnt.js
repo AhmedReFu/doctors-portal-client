@@ -10,7 +10,7 @@ const MyAppointemnt = () => {
     const [appointments, setAppointments] = useState([]);
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5001/booking?patient=${user.email}`, {
+            fetch(`https://doctors-protal-server-delta.vercel.app/booking?patient=${user.email}`, {
                 method: 'GET',
                 headers: {
                     'authorization': `Bearer ${localStorage.getItem('accessToken')}`
